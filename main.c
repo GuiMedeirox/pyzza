@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-
+#include "libs/clientesLib.h"
+#include "libs/pedidosLib.h"
+#include "libs/funcionarioLib.h"
+#include "libs/pizzasLib.h"
 
 int main() {
-    int opcao;
+    int op;
 
     do {
         printf("\nEscolha uma opção:\n");
@@ -15,22 +17,27 @@ int main() {
         printf("5. Sobre o projeto\n");
         printf("0. Sair\n");
         printf("Opção: ");
-        scanf("%d", &opcao);
-
-        switch (opcao) {
+	scanf("%d", &op);
+	getchar();  
+        switch (op) {
             case 1:
-                
+                system("cls||clear");
+                op =  menuPizzas(); 
                 break;
             case 2:
-                
+                system("cls||clear");
+                op =  menuFuncionario(); 
                 break;
             case 3:
-                
+                system("cls||clear");
+		        op =  menuClientes(); 
                 break;
             case 4:
-                
+                system("cls||clear");
+                op =  menuPedidos(); 
                 break;
             case 5: 
+                system("cls||clear");
                 printf("Projeto feito e utilizado na disciplina de programação, o intuito é simples: suprir todas (ou quase) as funcionalidades que um sistema de uma pizzaria pode ter.\n"); 
                 printf("dev: Guilherme\n");
                 printf("GitHub: @GuiMedeirox\n"); 
@@ -41,7 +48,7 @@ int main() {
                 printf("Opção inválida!\n");
                 break;
         }
-    } while (opcao != 0);
+    } while (op != 0);
 
     return 0;
 }
