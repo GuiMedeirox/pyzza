@@ -12,5 +12,13 @@ int menuFuncionario(){
   printf("Opção: "); 
   scanf("%d", &opcao);
 
-  return opcao;
+  switch (opcao){
+    case 1: 
+    printf("Digita o nome do funcionário: "); 
+    printf("Digita o CPF do funcionário: "); 
+    printf("Digita o telefone do funcionário: "); 
+    printf("Digita a função do funcionário: ");
+    default: 
+    printf("Opção inválida."); 
+}
 }

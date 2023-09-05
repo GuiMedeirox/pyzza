@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "clientesLib.h"
 
+
+
 int menuClientes(){
   int opcao; 
 
@@ -12,5 +14,13 @@ int menuClientes(){
   printf("Opção: "); 
   scanf("%d", &opcao);
 
-  return opcao;
+  switch (opcao){
+    case 1: 
+    printf("Digita o nome do cliente: "); 
+    printf("Digita o CPF do cliente: "); 
+    printf("Digita o telefone do cliente: "); 
+    default: 
+    printf("Opção inválida."); 
+
+}
 }

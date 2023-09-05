@@ -1,7 +1,7 @@
 #include <stdio.h> 
-#include "pizzaLib.h"
+#include "pizzasLib.h"
 
-int menuPizza(){
+int menuPizzas(){
   int opcao; 
   
   printf("1. Cadastrar um novo sabor de pizza\n");
@@ -12,5 +12,13 @@ int menuPizza(){
   printf("Opção: ");
   scanf("%d", &opcao);
 
-  return opcao; 
+   switch (opcao){
+    case 1: 
+    printf("Digita o sabor da pizza: "); 
+    printf("Digita os ingrediente ");
+    default: 
+    printf("Opção inválida."); 
+
+}
+
 }

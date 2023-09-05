@@ -12,7 +12,14 @@ int menuPedidos(){
   printf("Opção: "); 
   scanf("%d", &opcao);
 
-  return opcao;
+  switch (opcao){
+    case 1: 
+    printf("Digita o CPF do cliente: "); 
+    printf("Digita o sabor da pizza: "); 
+    default: 
+    printf("Opção inválida."); 
+
+}
 
 
 }

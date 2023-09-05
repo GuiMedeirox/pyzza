@@ -17,8 +17,7 @@ int main() {
         printf("5. Sobre o projeto\n");
         printf("0. Sair\n");
         printf("Opção: ");
-	scanf("%d", &op);
-	getchar();  
+	scanf("%d", &op);  
         switch (op) {
             case 1:
                 system("cls||clear");
