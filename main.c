@@ -9,6 +9,7 @@ int main() {
     int op;
 
     do {
+        
         printf("\nEscolha uma opção:\n");
         printf("1. Pizzas\n");
         printf("2. Funcionários\n");
@@ -17,19 +18,20 @@ int main() {
         printf("5. Sobre o projeto\n");
         printf("0. Sair\n");
         printf("Opção: ");
-	scanf("%d", &op);  
+	    scanf("%d", &op);  
+        
         switch (op) {
             case 1:
                 system("cls||clear");
-                op =  menuPizzas(); 
-                break;
+                menuPizzas();
+                break; 
             case 2:
                 system("cls||clear");
                 op =  menuFuncionario(); 
                 break;
             case 3:
                 system("cls||clear");
-		        op =  menuClientes(); 
+                menuClientes();
                 break;
             case 4:
                 system("cls||clear");
@@ -43,8 +45,9 @@ int main() {
             case 0:
                 printf("Saindo...\n");
                 break;
+            
             default:
-                printf("Opção inválida!\n");
+                printf("Opção inválida2!\n");
                 break;
         }
     } while (op != 0);

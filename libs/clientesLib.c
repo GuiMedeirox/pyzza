@@ -3,7 +3,7 @@
 
 
 
-int menuClientes(){
+void menuClientes(){
   int opcao; 
 
   printf("1. Cadastrar um novo cliente\n");
@@ -16,11 +16,29 @@ int menuClientes(){
 
   switch (opcao){
     case 1: 
-    printf("Digita o nome do cliente: "); 
-    printf("Digita o CPF do cliente: "); 
-    printf("Digita o telefone do cliente: "); 
-    default: 
-    printf("Opção inválida."); 
+      printf("Digita o nome do cliente: \n"); 
+      printf("Digita o CPF do cliente: \n"); 
+      printf("Digita o telefone do cliente: \n"); 
+      break; 
+    
+    case 2: 
+      printf("Digita o CPF do cliente a ser buscado:\n ");
+      break; 
+    
+    case 3: 
+    //showclientes();
+    break; 
+    
+    case 4 :
+      printf("Digita o CPF do cliente a ser editado: \n");
+      break; 
+    
+    case 5: 
+      printf("Digita o CPF do cliente a ser deletado: \n");
+      break; 
+    
+    // default: 
+    // printf("Opção inválida."); 
+  }
 
-}
 }
