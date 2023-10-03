@@ -1,11 +1,13 @@
 #include <stdio.h>
+#include <stdlib.h> 
 #include "clientesLib.h"
-
-
+#include "checkers.h"
+char nome[20];
+char telefone[]= {'8','8','8','8','8','8','8','8','8','8','8'};
+char cpf[]={'0','3','6','0','8','4','3','5','4','9','2'}; 
 
 void menuClientes(){
   int opcao; 
-
   printf("1. Cadastrar um novo cliente\n");
   printf("2. Buscar um cliente específico\n");
   printf("3. Ver os clientes\n");
@@ -40,5 +42,12 @@ void menuClientes(){
     // default: 
     // printf("Opção inválida."); 
   }
+
+}
+
+void criarCliente(char nome[]){
+  printf("Digita o nome do cliente: \n"); 
+  fgets(nome,10,stdin); 
+  //checkNome(nome);
 
 }
