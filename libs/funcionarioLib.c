@@ -1,6 +1,14 @@
 #include <stdio.h> 
 #include "funcionarioLib.h"
 
+struct Funcionario{
+  char* nome; 
+  char* cpf; 
+  char* telefone; 
+  char* funcao; 
+};
+
+
 int menuFuncionario(){
   int opcao; 
 

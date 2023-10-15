@@ -6,6 +6,13 @@ char nome[20];
 char telefone[]= {'8','8','8','8','8','8','8','8','8','8','8'};
 char cpf[]={'0','3','6','0','8','4','3','5','4','9','2'}; 
 
+struct Cliente{ 
+  char* nome; 
+  char* cpf; 
+  char* telefone; 
+};
+
+
 void menuClientes(){
   int opcao; 
   printf("1. Cadastrar um novo cliente\n");

@@ -1,6 +1,13 @@
 #include <stdio.h> 
 #include "pizzasLib.h"
 
+struct Pizza{
+  char* tamanho; 
+  char* recheio; 
+
+};
+
+
 void menuPizzas(){
   int opcao; 
   

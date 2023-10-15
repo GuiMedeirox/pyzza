@@ -1,6 +1,15 @@
 #include <stdio.h> 
 #include "pedidosLib.h"
 
+//o CPF e a PIZZA vão ser FK's de outros structs
+struct Pedido{
+  char* id; 
+  //Cliente cpf; 
+  //Pizza *sabor
+  //Pizza *tamanho
+};
+
+
 int menuPedidos(){
   int opcao; 
 
