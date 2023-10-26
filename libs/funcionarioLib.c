@@ -8,8 +8,7 @@ struct Funcionario{
   char* funcao; 
 };
 
-
-int menuFuncionario(){
+void menuFuncionario(){
   int opcao; 
 
   printf("1. Cadastrar um novo funcionário\n");
@@ -41,5 +40,5 @@ int menuFuncionario(){
     break;
     default: 
     printf("Opção inválida."); 
-}
+  }
 }

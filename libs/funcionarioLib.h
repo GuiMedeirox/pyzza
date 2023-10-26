@@ -1,1 +1,1 @@
-int menuFuncionario();
+void menuFuncionario();

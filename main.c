@@ -27,7 +27,7 @@ int main() {
                 break; 
             case 2:
                 system("cls||clear");
-                op =  menuFuncionario(); 
+                menuFuncionario(); 
                 break;
             case 3:
                 system("cls||clear");
@@ -35,7 +35,7 @@ int main() {
                 break;
             case 4:
                 system("cls||clear");
-                op =  menuPedidos(); 
+                menuPedidos(); 
                 break;
             case 5: 
                 system("cls||clear");

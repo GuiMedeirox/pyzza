@@ -1,12 +1,16 @@
 #include <stdio.h> 
+#include <stdlib.h> 
 #include "pizzasLib.h"
 
-struct Pizza{
-  char* tamanho; 
-  char* recheio; 
+Pizza* criarPizza(){
+  Pizza *p; 
+  p = (Pizza*) malloc(sizeof(Pizza));
+  
+  printf("--- Cadastro de Pacientes ---");
+  fgets(p->tamanho, sizeof(p->tamanho), stdin);
+  fputs(p->tamanho, stdout);
 
-};
-
+}
 
 void menuPizzas(){
   int opcao; 
@@ -23,9 +27,10 @@ void menuPizzas(){
 
    switch (opcao){
     case 1: 
-    printf("Digita o sabor da pizza: \n"); 
-    printf("Digita os ingrediente \n");
-    break; 
+      printf("Digita o sabor da pizza: \n"); 
+      printf("Digita os ingrediente \n");
+      criarPizza(); 
+      break; 
     case 2: 
     printf("Digita o sabor da pizza que você quer buscar: \n"); 
     break; 

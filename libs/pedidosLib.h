@@ -1,1 +1,1 @@
-int menuPedidos();
+void menuPedidos();
