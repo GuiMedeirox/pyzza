@@ -6,4 +6,4 @@ struct Pizza{
 };
 
 void menuPizzas(); 
-Pizza* criarPizza();
+void criarPizza();
