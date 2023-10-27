@@ -4,23 +4,20 @@
 #include <string.h> 
 #include "checkers.h"
 
-void criarPizza(Pizza* p, const char* filename){
-  // Pizza *p; 
+void criarPizza(Pizza* p, const char* filename){ 
   FILE* file = fopen(filename, "ab");
   p = (Pizza*) malloc(sizeof(Pizza));
   printf("--- Cadastro de Pizzas ---\n");
   do{
-  printf("Digita o tamanho da Pizza: ");
-  scanf("%s", p->tamanho);
-  getchar();
-  printf("Digita o recheio: ");
-  fgets(p->recheio, sizeof(p->recheio), stdin); 
-  } while(checkNome(p->recheio) == 0 && checkNome(p->tamanho) ==0);
+    printf("Digita o tamanho da Pizza: ");
+    scanf("%s", p->tamanho);
+    getchar();
+    printf("Digita o recheio: ");
+    fgets(p->recheio, sizeof(p->recheio), stdin); 
+  } while( checkNome(p->recheio) == 0 && checkNome(p->tamanho) == 0);
 
-  fprintf (file, "%s %s", p->recheio, p->tamanho);
+  fprintf (file, "%s %s", p->tamanho, p->recheio);
   fclose(file);
-
-
 
 }
 
