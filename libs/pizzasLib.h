@@ -1,8 +1,8 @@
 typedef struct Pizza Pizza;
 
 struct Pizza{
-  char tamanho[3]; 
-  char recheio[100]; 
+  char descricao[100]; 
+  char recheio[150]; 
 };
 
 void menuPizzas(); 

@@ -68,3 +68,7 @@ int checkNome(char* nome) {
     }
     return 1;
 }
+
+void clear(){
+  system("cls||clear");
+}
