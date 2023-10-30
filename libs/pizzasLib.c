@@ -1,6 +1,7 @@
 #include <stdio.h> 
 #include <stdlib.h> 
 #include <string.h> 
+#include <ctype.h> 
 #include "pizzasLib.h"
 #include "checkers.h"
 
@@ -11,39 +12,58 @@ void criarPizza(){
   printf("--- Cadastro de Pizzas ---\n");
   do{
     printf("Digita o sabor da Pizza: ");
-    scanf(" %100[^\n]", p->recheio);
+    scanf(" %100[^\n]", p->sabor);
+    getchar();
    // fgets(p->descricao, sizeof(p->descricao), stdin);
     printf("Digita os ingredientes da pizza: ");
-    scanf(" %150[^\n]", p->descricao);
+    scanf(" %150[^\n]", p->ingredientes);
     // fgets(p->recheio, sizeof(p->recheio), stdin); 
-  } while( checkNome(p->recheio) == 0 && checkNome(p->descricao) == 0);
+  } while( checkNome(p->sabor) == 0 && checkNome(p->ingredientes) == 0);
 
   printf("\nPizza criada com sucesso!");
-  printf("\nO sabor escolhido foi: %s", p->recheio);
-  printf("\nOs ingredientes do sabor %s sao %s: ", p->recheio, p->descricao); 
-  fprintf (file, "%s | %s \n", p->recheio, p->descricao);
+  printf("\nO sabor escolhido foi: %s", p->sabor);
+  printf("\nOs ingredientes do sabor %s sao: %s ", p->sabor, p->ingredientes); 
+  //fprintf (file, "%s | %s \n", p->sabor, p->ingredientes);
+  fwrite(p, sizeof(Pizza), 1, file);
+  free(p);
+  fclose(file); 
+}
+
+void lerCardapio(){
+  clear();
+  FILE* file = fopen("cardapio.dat", "rb");
+  if(file == NULL){
+      printf("Erro ao abrir o arquivo!\n");
+      exit(1);
+    }
+  Pizza* p = (Pizza*) malloc(sizeof(Pizza));
+  
+
+  while(fread(p, sizeof(Pizza), 1, file)){
+    printf("Sabor: %s || Ingredientes: %s\n", p->sabor, p->ingredientes);
+  }
   fclose(file);
 }
 
-void buscaPizza(){
+void buscarPizza(){
+  clear();
+  char sabor[100];
   FILE* file = fopen("cardapio.dat", "rb");
   Pizza* p = (Pizza*) malloc(sizeof(Pizza));
-  char sabor[30];
-
   if(file == NULL){
-    printf("Erro ao abrir o arquivo!");
-  } else{
-    printf("--- Busca de Pizzas ---\n");
-    printf("Digita o sabor de pizza a ser buscado: ");
-    scanf("%100[^\n]", sabor );
-
-  
+      printf("Erro ao abrir o arquivo!\n");
+      exit(1);
   }
 
-
-
+  printf("Digita o sabor que você quer buscar: ");
+  scanf(" %100[^\n]", sabor);
+  while(fread(p, sizeof(Pizza), 1, file)){
+    if(strcmp(sabor, p->sabor) == 0){
+      printf("%s", p->sabor);
+      fclose(file);
+    }
+  }
 }
-
 
 void menuPizzas(){
   int opcao; 
@@ -62,12 +82,12 @@ void menuPizzas(){
       break;
 
     case 2: 
-      // buscaPizza(); 
+      buscarPizza();
+      break; 
     
-    break; 
     case 3: 
-    //12cardapio()
-    break; 
+      lerCardapio();
+      break; 
     case 4: 
     printf("Digita o sabor da pizza que você quer editar: \n");
     break; 

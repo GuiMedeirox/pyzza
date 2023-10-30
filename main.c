@@ -10,8 +10,9 @@ int main() {
     int op;
 
     do {
-        printf("\n\n----------");
+        printf("\n----------");
         printf("\nPyzza!\n");
+        printf("\n----------\n");
         printf("Escolha uma opção:\n");
         printf("1. Pizzas\n");
         printf("2. Funcionários\n");

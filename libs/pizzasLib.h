@@ -1,8 +1,8 @@
 typedef struct Pizza Pizza;
 
 struct Pizza{
-  char descricao[100]; 
-  char recheio[150]; 
+  char sabor[100]; 
+  char ingredientes[150]; 
 };
 
 void menuPizzas(); 
