@@ -45,7 +45,7 @@ void lerCardapio(){
   fclose(file);
 }
 
-void buscarPizza(){
+void buscarPizza(){ 
   clear();
   char sabor[100];
   FILE* file = fopen("cardapio.dat", "rb");
@@ -58,11 +58,13 @@ void buscarPizza(){
   printf("Digita o sabor que você quer buscar: ");
   scanf(" %100[^\n]", sabor);
   while(fread(p, sizeof(Pizza), 1, file)){
-    if(strcmp(sabor, p->sabor) == 0){
+    printf("%s %s", p->sabor, sabor);
+    if(strcmp(p->sabor, sabor ) == 0){
       printf("%s", p->sabor);
-      fclose(file);
     }
   }
+  fclose(file);
+  free(p);
 }
 
 void menuPizzas(){
