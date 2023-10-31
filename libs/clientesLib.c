@@ -1,17 +1,62 @@
 #include <stdio.h>
 #include <stdlib.h> 
+#include <string.h> 
+#include <ctype.h> 
 #include "clientesLib.h"
 #include "checkers.h"
 
-char nome[20];
-char telefone[]= {'8','8','8','8','8','8','8','8','8','8','8'};
-char cpf[]={'0','3','6','0','8','4','3','5','4','9','2'}; 
+void criarCliente(){
+  clear();
+  FILE* file = fopen("clientes.dat", "ab");
+  Cliente* c = (Cliente*) malloc(sizeof(Cliente));
+  printf("--- Cadastro de Clientes ---\n");
+  
+    printf("Digita o nome do cliente: ");
+    scanf(" %100[^\n]", c->nome);
+    while(checkNome(c->nome) != 1){
+      printf("Nome inválido, insira novamente: ");
+      scanf(" %100[^\n]", c->nome);
+    }
+    getchar();
+   
+    printf("Digita o CPF do cliente: ");
+    scanf(" %15[0-9]", c->cpf);
+    while(checkCPF(c->cpf) != 1){
+      printf("CPF inválido, insira novamente: ");
+      scanf(" %12[0-9]", c->cpf);
+    }
+    printf("Digita o telefone do cliente: ");
+    scanf(" %15[0-9]", c->telefone);
+    while(checkTelefone(c->telefone) != 1){
+      printf("Número de telefone inválido!"); 
+      printf("Digita novamente o número do cliente: ");
+      scanf("%12[0-9]", c->telefone);
+    }
 
-struct Cliente{ 
-  char nome[30]; 
-  char* cpf[12]; 
-  char* telefone[11]; 
-};
+  printf("\nCliente criado com sucesso!");
+  printf("\nO nome do cliente é: %s", c->nome);
+  //fprintf (file, "%s | %s \n", p->sabor, p->ingredientes);
+  fwrite(c, sizeof(Cliente), 1, file);
+  free(c);
+  fclose(file); 
+  // fgets(p->recheio, sizeof(p->recheio), stdin); 
+  }
+
+
+void exibirClientes(){
+  FILE *file = fopen("clientes.dat", "rb");
+  Cliente *c = (Cliente*) malloc(sizeof(Cliente));  
+  
+  if (file == NULL){
+    printf("Erro ao abrir o arquivo de clientes!");
+    exit(1);
+  }
+  printf("NOME | CPF | TELEFONE\n");
+  while( fread(c, sizeof(Cliente), 1, file) ){
+    printf("%s | %s | %s\n", c->nome, c->cpf, c->telefone);
+  }
+  fclose(file);
+}
 
 void menuClientes(){
   int opcao; 
@@ -25,9 +70,7 @@ void menuClientes(){
 
   switch (opcao){
     case 1: 
-      printf("Digita o nome do cliente: \n"); 
-      printf("Digita o CPF do cliente: \n"); 
-      printf("Digita o telefone do cliente: \n"); 
+      criarCliente();
       break; 
     
     case 2: 
@@ -35,8 +78,8 @@ void menuClientes(){
       break; 
     
     case 3: 
-    //showclientes();
-    break; 
+      exibirClientes();
+      break; 
     
     case 4 :
       printf("Digita o CPF do cliente a ser editado: \n");
@@ -49,12 +92,5 @@ void menuClientes(){
     default: 
       printf("Opção inválida."); 
   }
-
-}
-
-void criarCliente(char nome[]){
-  printf("Digita o nome do cliente: \n"); 
-  fgets(nome,10,stdin); 
-  //checkNome(nome);
 
 }
