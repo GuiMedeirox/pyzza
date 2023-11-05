@@ -4,6 +4,7 @@ struct Funcionario{
   char cpf[12]; 
   char telefone[12]; 
   char funcao[50]; 
+  int status;
 };
 
 void menuFuncionario();
