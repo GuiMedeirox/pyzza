@@ -12,13 +12,15 @@ struct Pedido{
 void menuPedidos(){
   int opcao; 
 
-  printf("1. Cadastrar um novo pedido\n");
-  printf("2. Buscar um pedido específico\n");
-  printf("3. Ver os pedidos\n");
-  printf("4. Editar um pedido\n");
-  printf("5. Deletar um pedido\n");
-  printf("Opção: \n"); 
-  scanf("%d", &opcao);
+  printf("Caro usuário, a parte do pedido tem como base o conceito de listas aninhadas, conteúdo que será abordado na 3a unidade. Sendo assim, este modulo será desenvolvido durante esse período.  ");
+  printf("Volte em breve!");
+  // printf("1. Cadastrar um novo pedido\n");
+  // printf("2. Buscar um pedido específico\n");
+  // printf("3. Ver os pedidos\n");
+  // printf("4. Editar um pedido\n");
+  // printf("5. Deletar um pedido\n");
+  // printf("Opção: \n"); 
+  //scanf("%d", &opcao);
 
   switch (opcao){
     case 1: 
