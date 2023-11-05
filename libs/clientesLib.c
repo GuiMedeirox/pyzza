@@ -35,6 +35,7 @@ void criarCliente(){
 
   printf("\nCliente criado com sucesso!");
   printf("\nO nome do cliente é: %s", c->nome);
+  c->status=1;
   //fprintf (file, "%s | %s \n", p->sabor, p->ingredientes);
   fwrite(c, sizeof(Cliente), 1, file);
   free(c);
@@ -53,10 +54,118 @@ void exibirClientes(){
   }
   printf("NOME | CPF | TELEFONE\n");
   while( fread(c, sizeof(Cliente), 1, file) ){
-    printf("%s | %s | %s\n", c->nome, c->cpf, c->telefone);
+    if(c->status == 1){
+      printf("%s | %s | %s\n", c->nome, c->cpf, c->telefone);
+    }
   }
   fclose(file);
 }
+void buscarCliente(){
+  clear();
+  char cpf[12];
+  FILE* file = fopen("clientes.dat", "rb");
+  Cliente* c = (Cliente*) malloc(sizeof(Cliente));
+  if(file == NULL){
+      printf("Erro ao abrir o arquivo!\n");
+      exit(1);
+  }
+
+  printf("Digita o CPF do cliente que você quer buscar: ");
+  scanf(" %12[^\n]", cpf);
+
+  while(!feof(file)){
+    fread(c, sizeof(Cliente), 1, file);
+    if( strcmp(c->cpf, cpf) == 0 && c->status==1 ) {
+      printf("Cliente: %s", c->nome);
+      fclose(file);
+      break;
+    }
+  }
+  free(c);
+}
+
+void editarCliente(){
+  clear();
+  Cliente clienteEditado;
+  FILE* file = fopen("clientes.dat", "rb+");
+  char cpf[12];
+  int opt;
+
+  if(file == NULL){
+    printf("Erro ao abrir o arquivo de clientes.");
+    exit(1);
+  }
+  
+  printf("Digita o CPF do funcionário a ser editado: ");
+  scanf(" %11[^\n]", cpf);
+
+  while(fread(&clienteEditado, sizeof(Cliente), 1, file) == 1){
+    if(strcmp(clienteEditado.cpf, cpf) == 0 && clienteEditado.status ==1 ){
+      printf("Cliente encontrado! \n");
+      printf("Digita qual campo você vai querer editar: \n");
+      printf("1. nome\n");
+      printf("2. telefone\n");
+      scanf("%i", &opt);
+      getchar();
+      if (opt == 1){
+      
+        printf("Digita o novo nome p/ Cliente: ");
+        scanf(" %100[^\n]", clienteEditado.nome);
+        getchar();
+        while(checkNome(clienteEditado.nome) != 1){
+          printf("Nome inválido, digita novamente: ");
+          scanf("%100[^\n]", clienteEditado.nome);      
+        }
+        printf("Nome editado com sucesso, novo nome: %s ", clienteEditado.nome);
+      }
+      else if(opt == 2){
+      
+        printf("Digita o novo telefone p/ Cliente: ");
+        scanf(" %11[^\n]", clienteEditado.telefone);
+        getchar();
+        while(checkTelefone(clienteEditado.telefone) != 1){
+          printf("Telefone inválido, digita novamente: ");
+          scanf("%11[^\n]", clienteEditado.telefone);
+        }
+      
+        printf("Telefone editado com sucesso, novo numero: %s ", clienteEditado.telefone);
+      } else{
+        printf("Opção inválida.");
+      }
+
+      fseek(file, -sizeof(Cliente), SEEK_CUR);
+      fwrite(&clienteEditado, sizeof(Cliente), 1, file);
+    }
+  }
+}
+
+void deletarCliente(){
+  clear();
+  Cliente c; 
+  FILE* file=fopen("clientes.dat","rb+");
+  char cpf[12];
+
+  printf("Digita o CPF do cliente a ser deletado: "); 
+  scanf("%s", cpf);
+
+  if(file == NULL){
+    printf("Erro ao abrir o arquivo");
+    exit(1);
+  }
+
+  while(fread(&c, sizeof(Cliente),1, file) == 1){
+    if (strcmp(c.cpf, cpf) == 0){
+      printf("Deletando o cliente %s, de cpf %s e telefone %s.", c.nome, c.cpf, c.telefone);
+      c.status = 0; 
+      
+      fseek(file, -sizeof(Cliente), SEEK_CUR);
+      fwrite(&c, sizeof(Cliente), 1, file);
+      fclose(file);
+      break;
+    } 
+  }
+}
+
 
 void menuClientes(){
   int opcao; 
@@ -74,7 +183,7 @@ void menuClientes(){
       break; 
     
     case 2: 
-      printf("Digita o CPF do cliente a ser buscado:\n ");
+      buscarCliente();
       break; 
     
     case 3: 
@@ -82,11 +191,11 @@ void menuClientes(){
       break; 
     
     case 4 :
-      printf("Digita o CPF do cliente a ser editado: \n");
+      editarCliente();
       break; 
     
     case 5: 
-      printf("Digita o CPF do cliente a ser deletado: \n");
+      deletarCliente();
       break; 
     
     default: 
