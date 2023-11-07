@@ -23,6 +23,7 @@ void criarFuncionario(){
     printf("Digita o telefone do funcionário: ");
     scanf(" %11[0-9]", f->telefone); 
 
+    printf("Digita a funcao do funcionario: ");
     scanf(" %50[^\n]", f->funcao);
     getchar();
   } while(checkTelefone(f->telefone) == 0 && checkNome(f->funcao) == 0 && checkCPF(f->cpf) == 0 && checkNome(f->nome) == 0 );
