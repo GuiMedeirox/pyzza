@@ -48,7 +48,6 @@ void criarPizza(){
   fclose(file); 
 }
 
-
 void lerCardapio(){
   clear();
   FILE* file = fopen("cardapio.dat", "rb");
@@ -89,6 +88,31 @@ void buscarPizza(){
   free(p);
 }
 
+void buscarPizzaIngrediente(){
+  clear();
+  char ingredientes[150];
+  FILE* file = fopen("cardapio.dat", "rb");
+  Pizza* p = (Pizza*) malloc(sizeof(Pizza));
+  if(file == NULL){
+      printf("Erro ao abrir o arquivo!\n");
+      exit(1);
+  }
+
+  printf("Digita, pelo menos, um dos ingredientes que você quer buscar: ");
+  scanf(" %150[^\n]", ingredientes);
+  while(!feof(file)){
+    fread(p, sizeof(Pizza), 1, file);
+    if( strstr(p->ingredientes, ingredientes) != NULL && p->status==1 ) {
+      printf("%s \n", p->ingredientes);
+    }
+    if(feof(file)){
+        fclose(file);
+        free(p);
+        break;
+    }
+  }
+}
+
 void editarPizza(){
   clear();
   Pizza pizzaEditada;
@@ -107,7 +131,6 @@ void editarPizza(){
 
   while(fread(&pizzaEditada, sizeof(Pizza), 1, file) == 1){
     if(strcmp(pizzaEditada.tag, tag) == 0){
-      printf("Pizza editada! \n");
       printf("Digita qual campo você vai querer editar: \n");
       printf("1. nome\n");
       printf("2. ingredientes\n");
@@ -128,6 +151,7 @@ void editarPizza(){
           scanf(" %150[^\n]", pizzaEditada.ingredientes);
         }
       }
+      printf("Pizza editada! \n");
       fseek(file, -sizeof(Pizza), SEEK_CUR);
       fwrite(&pizzaEditada, sizeof(Pizza), 1, file);
     }
@@ -169,12 +193,13 @@ void menuPizzas(){
   printf("1. Cadastrar um novo sabor de pizza\n");
   printf("2. Buscar um sabor de pizza específico\n");
   printf("3. Ver o cardápio\n");
-  printf("4. Editar um sabor de pizza\n");
-  printf("5. Deletar um sabor de pizza\n");
+  printf("4. Buscar uma pizza por um ingrediente \n");
+  printf("5. Editar um sabor de pizza\n");
+  printf("6. Deletar um sabor de pizza\n");
   printf("Opção: ");
   scanf("%i", &opcao);  
 
-   switch (opcao){
+  switch (opcao){
     case 1: 
       criarPizza();
       break;
@@ -186,15 +211,20 @@ void menuPizzas(){
     case 3: 
       lerCardapio();
       break; 
+   
     case 4: 
+      buscarPizzaIngrediente();
+      break;
+
+    case 5: 
       editarPizza();
       break; 
-    case 5: 
+    case 6: 
       deletarPizza();
       break; 
     default: 
     printf("Opção inválida."); 
 
-}
+  }
 
 }
