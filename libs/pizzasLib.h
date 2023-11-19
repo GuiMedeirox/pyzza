@@ -9,3 +9,7 @@ struct Pizza{
 
 void menuPizzas(); 
 void criarPizza();
+void editarPizza();
+void deletarPizza();
+void lerCardapio();
+void buscarPizza();
