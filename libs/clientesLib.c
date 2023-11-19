@@ -60,6 +60,7 @@ void exibirClientes(){
   }
   fclose(file);
 }
+
 void buscarCliente(){
   clear();
   char cpf[12];
@@ -82,6 +83,31 @@ void buscarCliente(){
     }
   }
   free(c);
+}
+
+void buscarClienteFiltrado(){
+  clear();
+  char nome[100];
+  FILE* file = fopen("clientes.dat", "rb");
+  Cliente* c = (Cliente*) malloc(sizeof(Cliente));
+  if(file == NULL){
+      printf("Erro ao abrir o arquivo!\n");
+      exit(1);
+  }
+
+  printf("Digita o nome do cliente que você quer buscar: ");
+  scanf(" %100[^\n]", nome);
+  while(!feof(file)){
+    fread(c, sizeof(Cliente), 1, file);
+    if( strstr(c->nome, nome) != NULL && c->status==1 ) {
+      printf("%s \n", c->nome);
+    }
+    if(feof(file)){
+        fclose(file);
+        free(c);
+        break;
+    }
+  }
 }
 
 void editarCliente(){
@@ -171,9 +197,10 @@ void menuClientes(){
   int opcao; 
   printf("1. Cadastrar um novo cliente\n");
   printf("2. Buscar um cliente específico\n");
-  printf("3. Ver os clientes\n");
-  printf("4. Editar um cliente\n");
-  printf("5. Deletar um cliente\n");
+  printf("3. Buscar cliente(s) com um nome específico \n");
+  printf("4. Ver os clientes\n");
+  printf("5. Editar um cliente\n");
+  printf("6. Deletar um cliente\n");
   printf("Opção: "); 
   scanf("%d", &opcao);
 
@@ -187,14 +214,18 @@ void menuClientes(){
       break; 
     
     case 3: 
+      buscarClienteFiltrado();
+      break;
+      
+    case 4:   
       exibirClientes();
       break; 
     
-    case 4 :
+    case 5 :
       editarCliente();
       break; 
     
-    case 5: 
+    case 6: 
       deletarCliente();
       break; 
     
