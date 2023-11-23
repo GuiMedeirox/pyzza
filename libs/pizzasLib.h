@@ -4,7 +4,15 @@ struct Pizza{
   char tag[10];
   char sabor[100]; 
   char ingredientes[150]; 
+  enum Tamanho; 
   int status; 
+};
+
+enum Tamanho{
+  P = 20, 
+  M = 30,
+  G = 40,
+  GG= 50
 };
 
 void menuPizzas(); 
@@ -13,3 +21,4 @@ void editarPizza();
 void deletarPizza();
 void lerCardapio();
 void buscarPizza();
+void buscarPizzaIngrediente();
