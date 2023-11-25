@@ -20,9 +20,9 @@ void criarCliente(){
     getchar();
    
     printf("Digita o CPF do cliente: ");
-    scanf(" %15[0-9]", c->cpf);
-    while(checkCPF(c->cpf) != 1){
-      printf("CPF inválido, insira novamente: ");
+    scanf(" %12[0-9]", c->cpf);
+    while(checkCPF(c->cpf) != 1 ||verificaCPFDuplicado(c->cpf) == 1 ){
+      printf("CPF inválido ou já cadastrado no banco de dados, insira novamente: ");
       scanf(" %12[0-9]", c->cpf);
     }
     printf("Digita o telefone do cliente: ");
@@ -85,6 +85,27 @@ void buscarCliente(){
   free(c);
 }
 
+int verificaCPFDuplicado(const char* cpf) {
+    FILE* file = fopen("clientes.dat", "rb");
+
+    if (file == NULL) {
+        printf("Erro ao abrir o arquivo para leitura.\n");
+        return 0; 
+    }
+
+    Cliente cliente;
+
+    while (fread(&cliente, sizeof(Cliente), 1, file) == 1) {
+        if (strcmp(cliente.cpf, cpf) == 0) {            
+            fclose(file);
+            return 1;
+        }
+    }
+
+    fclose(file);
+    return 0;
+}
+
 void buscarClienteFiltrado(){
   clear();
   char nome[100];
@@ -101,13 +122,13 @@ void buscarClienteFiltrado(){
     fread(c, sizeof(Cliente), 1, file);
     if( strstr(c->nome, nome) != NULL && c->status==1 ) {
       printf("%s \n", c->nome);
-    }
-    if(feof(file)){
-        fclose(file);
-        free(c);
-        break;
+      printf(">-<>-<>-<>-<>-<>-<>-<>-<\n");
     }
   }
+
+  fclose(file);
+  free(c);    
+
 }
 
 void editarCliente(){

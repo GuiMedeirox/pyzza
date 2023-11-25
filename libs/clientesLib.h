@@ -12,3 +12,4 @@ void exibirClientes();
 void buscarCliente();
 void editarCliente();
 void deletarCliente();
+int verificaCPFDuplicado(const char* cpf);
