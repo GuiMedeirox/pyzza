@@ -30,9 +30,9 @@ void criarPizza(){
 
     printf("Digita a tag da pizza: ");
     scanf(" %10[^\n]", p->tag);
-
     
-    while( checkNome(p->tag) != 1){
+    
+    while( checkNome(p->tag) != 1 || verificaTAGDuplicada(p->tag)){
       printf("TAG Invalida, digita novamente: ");
       scanf(" %10[^\n]", p->tag);
     }
@@ -48,6 +48,27 @@ void criarPizza(){
   fclose(file); 
 }
 
+int verificaTAGDuplicada(const char* tag) {
+    FILE* file = fopen("cardapio.dat", "rb");
+
+    if (file == NULL) {
+        printf("Erro ao abrir o arquivo para leitura.\n");
+        return 0; 
+    }
+
+    Pizza pizza;
+
+    while (fread(&pizza, sizeof(Pizza), 1, file) == 1) {
+        if (strcmp(pizza.tag, tag) == 0) {            
+            fclose(file);
+            return 1;
+        }
+    }
+
+    fclose(file);
+    return 0;
+}
+
 void lerCardapio(){
   clear();
   FILE* file = fopen("cardapio.dat", "rb");
@@ -58,7 +79,10 @@ void lerCardapio(){
     }
   while(fread(p, sizeof(Pizza), 1, file)){
     if(p->status == 1){
-      printf("Sabor: %s || Ingredientes: %s || tag: %s\n", p->sabor, p->ingredientes, p->tag);
+      printf("Sabor: %s\n", p->sabor);
+      printf("Ingredientes: %s\n", p->ingredientes);
+      printf("TAG: %s\n", p->tag);
+      printf(">-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<\n");
     }
   }
   fclose(file);

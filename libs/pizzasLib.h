@@ -4,7 +4,6 @@ struct Pizza{
   char tag[10];
   char sabor[100]; 
   char ingredientes[150]; 
-  enum Tamanho; 
   int status; 
 };
 
@@ -22,3 +21,4 @@ void deletarPizza();
 void lerCardapio();
 void buscarPizza();
 void buscarPizzaIngrediente();
+int verificaTAGDuplicada(const char* tag);
