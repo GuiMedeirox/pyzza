@@ -1,10 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "libs/clientesLib.h"
-#include "libs/pedidosLib.h"
-#include "libs/funcionarioLib.h"
-#include "libs/pizzasLib.h"
-#include "libs/checkers.h"
+#include "libs/all.h"
 
 int main() {
     int op;
@@ -38,7 +32,7 @@ int main() {
                 break;
             case 4:
                 clear();
-                menuPedidos(); 
+                menuPedido(); 
                 break;
             case 5: 
                 clear();
