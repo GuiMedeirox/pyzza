@@ -1,48 +1,55 @@
-#include <stdio.h> 
-#include "pedidosLib.h"
-#include "pizzasLib.h"
-#include "clientesLib.h"
+#include "all.h"
 
-struct Pedido{
-  int id; 
-  // struct Cliente cliente; 
-  // struct Pizza pizza;
-};
+void criarPedido();
+void menuPedido();
 
-void menuPedidos(){
-  int opcao; 
+void criarPedido(){
+  Pedido *p = (Pedido*) malloc(sizeof(Pedido));
+  printf("Insere o CPF do responsavel pelo pedido: ");
+  scanf(" %11[^\n]", p->cpf );
+  char *clienteNome = encontraCliente(p->cpf);
+  if(clienteNome != NULL){
+    printf("%s", clienteNome);
+  } else{
+    printf("Cliente nao encontrado");
+  }
 
-  printf("Caro usuário, a parte do pedido tem como base o conceito de listas aninhadas, conteúdo que será abordado na 3a unidade. Sendo assim, este modulo será desenvolvido durante esse período.  ");
-  printf("Volte em breve!");
-  // printf("1. Cadastrar um novo pedido\n");
-  // printf("2. Buscar um pedido específico\n");
-  // printf("3. Ver os pedidos\n");
-  // printf("4. Editar um pedido\n");
-  // printf("5. Deletar um pedido\n");
-  // printf("Opção: \n"); 
-  //scanf("%d", &opcao);
+  printf("Insere a TAG da pizza: ");
+  scanf(" %10[^\n]", p->tag);
+  char *saborPizza = encontraPizza(p->tag);
+  
 
-  switch (opcao){
+  
+  if(saborPizza!=NULL){
+    printf("%s", saborPizza);
+  } else {
+    printf("Pizza nao encontrada");
+  }
+  free(p);
+}
+
+void menuPedido(){
+  int opt; 
+  printf("1. Fazer pedido\n");
+  printf("2. Ver pedidos\n");
+  printf("3. Buscar pedidos\n");
+  printf("4. Buscar pedido específico\n");
+  printf("5. Deletar pedido");
+  printf("Digita qual opcao voce quer: ");
+  scanf("%d", &opt);
+
+  switch(opt){
     case 1: 
-    printf("Digita o CPF do cliente:\n "); 
-    printf("Digita o sabor da pizza:\n "); 
-    break;
+      criarPedido();
+      break;
     case 2: 
-    printf("Digita o id do pedido: \n");
-    break;
-    case 3:
-    //showpedidos(); 
-    break;
+      break; 
+    case 3: 
+      break;
     case 4: 
-    printf("Digita o id do pedido a ser editado: \n");
-    break; 
+      break;
     case 5: 
-    printf("Digita o id do pedido a ser deletado: \n");
-    break; 
-    default: 
-    printf("Opção inválida."); 
+      break;
 
-}
-
-
-}
+  }
+};
