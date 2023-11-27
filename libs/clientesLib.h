@@ -9,7 +9,8 @@ struct Cliente{
 void menuClientes();
 void criarCliente();
 void exibirClientes();
-void buscarCliente();
+int buscarCliente();
 void editarCliente();
 void deletarCliente();
-int verificaCPFDuplicado(const char* cpf);
+int verificaCPFDuplicado( char* cpf);
+char *encontraCliente(char* cpf);

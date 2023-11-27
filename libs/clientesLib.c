@@ -1,9 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h> 
-#include <string.h> 
-#include <ctype.h> 
-#include "clientesLib.h"
-#include "checkers.h"
+#include "all.h"
 
 void criarCliente(){
   clear();
@@ -44,6 +39,7 @@ void criarCliente(){
   }
 
 
+
 void exibirClientes(){
   FILE *file = fopen("clientes.dat", "rb");
   Cliente *c = (Cliente*) malloc(sizeof(Cliente));  
@@ -61,7 +57,7 @@ void exibirClientes(){
   fclose(file);
 }
 
-void buscarCliente(){
+int buscarCliente(){
   clear();
   char cpf[12];
   FILE* file = fopen("clientes.dat", "rb");
@@ -72,25 +68,57 @@ void buscarCliente(){
   }
 
   printf("Digita o CPF do cliente que você quer buscar: ");
-  scanf(" %12[^\n]", cpf);
+  scanf(" %11[^\n]", cpf);
 
   while(!feof(file)){
     fread(c, sizeof(Cliente), 1, file);
     if( strcmp(c->cpf, cpf) == 0 && c->status==1 ) {
       printf("Cliente: %s", c->nome);
       fclose(file);
+      return 1; 
       break;
     }
   }
   free(c);
+  return 0; 
 }
 
-int verificaCPFDuplicado(const char* cpf) {
+char *encontraCliente( char *cpf) {
+    Cliente cliente;
+    FILE *file = fopen("clientes.dat", "rb"); // Abre o arquivo para leitura
+
+    if (file == NULL) {
+        printf("Erro ao abrir o arquivo para leitura.\n");
+        return NULL;
+    }
+
+    while (fread(&cliente, sizeof(Cliente), 1, file) == 1) {
+        if (strcmp(cliente.cpf, cpf) == 0) {
+            // CPF encontrado, aloca memória para o nome
+            char *result = (char *)malloc(strlen(cliente.nome) + 1);
+            if (result == NULL) {
+                printf("Erro ao alocar memória.\n");
+                fclose(file);
+                return NULL;
+            }
+
+            // Copia o nome para o resultado e o retorna
+            strcpy(result, cliente.nome);
+            fclose(file);
+            return result;
+        }
+    }
+    // Se o CPF não for encontrado, retorna NULL
+    fclose(file);
+    return NULL;
+}
+
+int verificaCPFDuplicado(char* cpf) {
     FILE* file = fopen("clientes.dat", "rb");
 
     if (file == NULL) {
         printf("Erro ao abrir o arquivo para leitura.\n");
-        return 0; 
+        exit(1); 
     }
 
     Cliente cliente;
