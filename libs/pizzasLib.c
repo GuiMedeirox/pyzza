@@ -1,12 +1,12 @@
-#include <stdio.h> 
-#include <stdlib.h> 
-#include <string.h> 
-#include <ctype.h> 
-#include "pizzasLib.h"
-#include "checkers.h"
+#include "all.h"
+
+float obterPreco(const char* tamanho);
+void criarPizza();
+
 
 void criarPizza(){
   clear();
+  char tamanhoStr[2];
   FILE* file = fopen("cardapio.dat", "ab");
   Pizza* p = (Pizza*) malloc(sizeof(Pizza));
   printf("--- Cadastro de Pizzas ---\n");
@@ -27,20 +27,32 @@ void criarPizza(){
       printf("Ingredientes invalidos, digite novamente: ");
       scanf(" %150[^\n]", p->ingredientes);
     }
-
+    printf("(Digita a TAG + tamanho da pizza, exemplo: Frango Catupiry, tamanho G -> FCTPG)\n");
     printf("Digita a tag da pizza: ");
     scanf(" %10[^\n]", p->tag);
     
-    
-    while( checkNome(p->tag) != 1 || verificaTAGDuplicada(p->tag)){
-      printf("TAG Invalida, digita novamente: ");
+    while( checkNome(p->tag) != 1 || verificaTAGDuplicada(p->tag) == 1){
+      printf("TAG invalida ou ja esta em uso, digita novamente: ");
       scanf(" %10[^\n]", p->tag);
     }
-   
+
+    printf("Digita o tamanho da pizza: ");
+    scanf(" %2[^\n]", p->tamanho);
+
+    while( p->tamanho == NULL ){
+      printf("Tamanho invalido, insira novamente: ");
+      scanf(" %2[^\n]", p->tamanho);
+    }
+
+
+
   printf("\nPizza criada com sucesso!");
   printf("\nO sabor escolhido foi: %s", p->sabor);
   printf("\nOs ingredientes do sabor %s sao: %s ", p->sabor, p->ingredientes);
+  printf("\nTamanho da pizza: %s", p->tamanho);
   printf("\nTag da pizza: %s", p->tag);
+  p->total = obterPreco(p->tamanho);
+  printf("\nPreco da pizza: %f", p->total);
   p->status=1;
 
   fwrite(p, sizeof(Pizza), 1, file);
@@ -69,6 +81,37 @@ int verificaTAGDuplicada(const char* tag) {
     return 0;
 }
 
+char* encontraPizza (const char* tag){
+    Pizza p;
+    FILE *file = fopen("cardapio.dat", "rb"); // Abre o arquivo para leitura
+
+    if (file == NULL) {
+        printf("Erro ao abrir o arquivo para leitura.\n");
+        return NULL;
+    }
+
+    while (fread(&p, sizeof(Pizza), 1, file) == 1) {
+        if (strcmp(p.tag, tag) == 0) {
+    
+            char *result = (char *)malloc(strlen(p.sabor) + 1);
+            if (result == NULL) {
+                printf("Erro ao alocar memória.\n");
+                fclose(file);
+                return NULL;
+            }
+
+    
+            strcpy(result, p.sabor);
+            fclose(file);
+            return result;
+        }
+    }
+    
+    fclose(file);
+    return NULL;
+}
+
+
 void lerCardapio(){
   clear();
   FILE* file = fopen("cardapio.dat", "rb");
@@ -82,13 +125,14 @@ void lerCardapio(){
       printf("Sabor: %s\n", p->sabor);
       printf("Ingredientes: %s\n", p->ingredientes);
       printf("TAG: %s\n", p->tag);
+      printf("Preco: %f\n", p->total);
       printf(">-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<\n");
     }
   }
   fclose(file);
 }
 
-void buscarPizza(){ 
+int buscarPizza(){ 
   clear();
   char tag[10];
   FILE* file = fopen("cardapio.dat", "rb");
@@ -106,10 +150,12 @@ void buscarPizza(){
     if( strcmp(p->tag, tag) == 0 && p->status==1) {
       printf("%s", p->sabor);
       fclose(file);
+      return 0; 
       break;
     }
   }
   free(p);
+  return 1; 
 }
 
 void buscarPizzaIngrediente(){
@@ -209,6 +255,22 @@ void deletarPizza(){
     }
   }
   fclose(file);
+}
+
+float obterPreco(const char* tamanho) {
+
+  if ( strcmp(tamanho, "P") == 0 ){
+    return 20.0;
+  } else if ( strcmp(tamanho, "M") == 0 ){
+    return 25.0;
+  } else if ( strcmp(tamanho, "G") == 0 ){
+    return 30.0;
+  } else if ( strcmp(tamanho, "GG") == 0 ){
+    return 35.0;
+  } else{
+    return 0.0;
+  }
+
 }
 
 void menuPizzas(){

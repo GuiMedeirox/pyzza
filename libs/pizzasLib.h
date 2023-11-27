@@ -5,20 +5,17 @@ struct Pizza{
   char sabor[100]; 
   char ingredientes[150]; 
   int status; 
+  char tamanho[2]; 
+  float total; 
 };
 
-enum Tamanho{
-  P = 20, 
-  M = 30,
-  G = 40,
-  GG= 50
-};
-
+float obterPreco(const char* tamanho);
 void menuPizzas(); 
 void criarPizza();
 void editarPizza();
 void deletarPizza();
 void lerCardapio();
-void buscarPizza();
-void buscarPizzaIngrediente();
+int buscarPizza();
+void buscarPizzaIngrediente(); 
+char* encontraPizza (const char* tag);
 int verificaTAGDuplicada(const char* tag);
