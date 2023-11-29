@@ -5,9 +5,9 @@ struct Pedido{
   int idPedido;
   // Pizza *p;
   float total; 
+  int status;
   char tag[10];
   char cpf[11];
-  int status;
 };
 
 void menuPedido();

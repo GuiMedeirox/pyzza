@@ -8,23 +8,23 @@ void criarPedido(){
   printf("Insere o CPF do responsavel pelo pedido: ");
   scanf(" %11[^\n]", p->cpf );
   char *clienteNome = encontraCliente(p->cpf);
-  if(clienteNome != NULL){
-    printf("%s", clienteNome);
-  } else{
+  if(clienteNome == NULL){
     printf("Cliente nao encontrado");
-  }
+    // printf("%s", clienteNome);
+  } 
 
   printf("Insere a TAG da pizza: ");
   scanf(" %10[^\n]", p->tag);
   char *saborPizza = encontraPizza(p->tag);
-  
-
-  
-  if(saborPizza!=NULL){
-    printf("%s", saborPizza);
-  } else {
+  char *tamanhoPizza = obterTamanhoPizza(p->tag);
+  float preco = obterPreco(tamanhoPizza);
+  if(saborPizza==NULL || tamanhoPizza==NULL){
     printf("Pizza nao encontrada");
   }
+  printf("Dados do pedido: \n");
+  printf("%s --- %s --- %s --- %f", clienteNome, saborPizza, tamanhoPizza, preco);
+
+
   free(p);
 }
 
