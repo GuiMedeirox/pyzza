@@ -10,6 +10,7 @@ struct Pizza{
 };
 
 float obterPreco(const char* tamanho);
+char* obterTamanhoPizza(const char* tag);
 void menuPizzas(); 
 void criarPizza();
 void editarPizza();

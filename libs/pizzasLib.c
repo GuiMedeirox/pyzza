@@ -257,6 +257,36 @@ void deletarPizza(){
   fclose(file);
 }
 
+char* obterTamanhoPizza(const char* tag){
+  Pizza p; 
+  FILE* file = fopen("cardapio.dat", "rb");
+    if (file == NULL) {
+        printf("Erro ao abrir o arquivo para leitura.\n");
+        return NULL;
+    }
+
+    while (fread(&p, sizeof(Pizza), 1, file) == 1) {
+        if (strcmp(p.tag, tag) == 0) {
+    
+            char *result = (char *)malloc(strlen(p.tag) + 1);
+            if (result == NULL) {
+                printf("Erro ao alocar memória.\n");
+                fclose(file);
+                return NULL;
+            }
+
+    
+            strcpy(result, p.tamanho);
+            fclose(file);
+            return result;
+        }
+    }
+    
+    fclose(file);
+    return NULL;
+}
+
+
 float obterPreco(const char* tamanho) {
 
   if ( strcmp(tamanho, "P") == 0 ){
