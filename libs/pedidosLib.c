@@ -6,7 +6,6 @@ void menuPedido();
 void criarPedido(){
   Pedido *p = (Pedido*) malloc(sizeof(Pedido));
   FILE* file = fopen("pedidos.dat", "ab");
-
   if(file == NULL){
     printf("Erro ao abrir o arquivo. ");
     exit(1);
@@ -32,7 +31,7 @@ void criarPedido(){
   printf("Dados do pedido: \n");
   printf("ID | CPF | CLIENTE | SABOR | TAMANHO | PRECO\n");
   printf(" %d --- %s --- %s --- %s --- %s --- %f", p->idPedido, p->cpf ,p->clienteNome, p->saborPizza, p->tamanhoPizza, p->precoPizza);
-  fwrite(p, sizeof(Pizza), 1, file);
+  fwrite(p, sizeof(Pedido), 1, file);
   free(p);
 }
 
@@ -44,12 +43,14 @@ void listarPedidos(){
     printf("Erro ao abrir o arquivo de clientes!");
     exit(1);
   }
-  printf("NOME | CPF | TELEFONE\n");
-  while( fread(p, sizeof(Pizza), 1, file) ){
-    
-      printf("%s | %s | %s\n", c->nome, c->cpf, c->telefone);
-  
+  while( fread(p, sizeof(Pedido), 1, file) ){
+      printf("-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#\n");     
+      printf("ID    -      TOTAL DO PEDIDO - STATUS - TAG - CPF \n");
+      printf("%-6d | %-6f | %-1d | %-10s | %-11s \n", p->idPedido, p->totalPedido, p->status, p->tag, p->cpf);
+      printf("CLIENTE - SABOR - TAMANHO - PRECO\n");
+      printf("%-25s | %-25s | %-2s | %-5f", p->clienteNome, p->saborPizza, p->tamanhoPizza, p->precoPizza);  
   }
+  free(p);
   fclose(file);
 }
 
@@ -68,6 +69,7 @@ void menuPedido(){
       criarPedido();
       break;
     case 2: 
+      listarPedidos();
       break; 
     case 3: 
       break;
