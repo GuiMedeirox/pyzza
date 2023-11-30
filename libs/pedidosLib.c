@@ -5,27 +5,52 @@ void menuPedido();
 
 void criarPedido(){
   Pedido *p = (Pedido*) malloc(sizeof(Pedido));
-  printf("Insere o CPF do responsavel pelo pedido: ");
-  scanf(" %11[^\n]", p->cpf );
-  char *clienteNome = encontraCliente(p->cpf);
-  if(clienteNome == NULL){
+  FILE* file = fopen("pedidos.dat", "ab");
+
+  if(file == NULL){
+    printf("Erro ao abrir o arquivo. ");
+    exit(1);
+  }
+  do{
+    printf("Insere o CPF do responsavel pelo pedido: ");
+    scanf(" %11[^\n]", p->cpf );
+  } while(checkCPF(p->cpf) != 1);
+  p->clienteNome = encontraCliente(p->cpf);
+  if(p->clienteNome == NULL){
     printf("Cliente nao encontrado");
-    // printf("%s", clienteNome);
   } 
 
   printf("Insere a TAG da pizza: ");
   scanf(" %10[^\n]", p->tag);
-  char *saborPizza = encontraPizza(p->tag);
-  char *tamanhoPizza = obterTamanhoPizza(p->tag);
-  float preco = obterPreco(tamanhoPizza);
-  if(saborPizza==NULL || tamanhoPizza==NULL){
+  p->idPedido= rand() % 1000000;
+  p->saborPizza = encontraPizza(p->tag);
+  p->tamanhoPizza = obterTamanhoPizza(p->tag);
+  p->precoPizza = obterPreco(p->tamanhoPizza);
+  if(p->saborPizza==NULL || p->tamanhoPizza==NULL){
     printf("Pizza nao encontrada");
   }
   printf("Dados do pedido: \n");
-  printf("%s --- %s --- %s --- %f", clienteNome, saborPizza, tamanhoPizza, preco);
-
-
+  printf("ID | CPF | CLIENTE | SABOR | TAMANHO | PRECO\n");
+  printf(" %d --- %s --- %s --- %s --- %s --- %f", p->idPedido, p->cpf ,p->clienteNome, p->saborPizza, p->tamanhoPizza, p->precoPizza);
+  fwrite(p, sizeof(Pizza), 1, file);
   free(p);
+}
+
+void listarPedidos(){
+  FILE *file = fopen("pedidos.dat", "rb");
+  Pedido *p = (Pedido*) malloc(sizeof(Pedido));  
+  
+  if (file == NULL){
+    printf("Erro ao abrir o arquivo de clientes!");
+    exit(1);
+  }
+  printf("NOME | CPF | TELEFONE\n");
+  while( fread(p, sizeof(Pizza), 1, file) ){
+    
+      printf("%s | %s | %s\n", c->nome, c->cpf, c->telefone);
+  
+  }
+  fclose(file);
 }
 
 void menuPedido(){
