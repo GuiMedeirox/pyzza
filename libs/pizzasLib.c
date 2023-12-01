@@ -99,8 +99,6 @@ char* encontraPizza (const char* tag){
                 fclose(file);
                 return NULL;
             }
-
-    
             strcpy(result, p.sabor);
             fclose(file);
             return result;
@@ -268,7 +266,7 @@ char* obterTamanhoPizza(const char* tag){
     while (fread(&p, sizeof(Pizza), 1, file) == 1) {
         if (strcmp(p.tag, tag) == 0) {
     
-            char *result = (char *)malloc(strlen(p.tag) + 1);
+            char *result = (char *)malloc(strlen(p.tamanho) + 1);
             if (result == NULL) {
                 printf("Erro ao alocar memória.\n");
                 fclose(file);
