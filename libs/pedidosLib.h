@@ -6,7 +6,7 @@ struct Pedido{
   float totalPedido; 
   int status;
   char tag[10];
-  char cpf[11];
+  char cpf[12];
   char clienteNome[100]; 
   char saborPizza[100]; 
   char tamanhoPizza[2]; 
@@ -16,4 +16,5 @@ struct Pedido{
 void menuPedido();
 void criarPedido();
 void listarPedidos();
+int verificaIdPedido(int a); 
 // void verPedidos();

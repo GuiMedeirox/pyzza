@@ -12,8 +12,9 @@ void criarPedido(){
   }
   do{
     printf("Insere o CPF do responsavel pelo pedido: ");
-    scanf(" %11[^\n]", p->cpf );
+    scanf(" %12[0-9]", p->cpf );
   } while(checkCPF(p->cpf) != 1);
+  
   strcpy(p->clienteNome, encontraCliente(p->cpf));
   if(p->clienteNome == NULL){
     printf("Cliente nao encontrado");
@@ -21,7 +22,11 @@ void criarPedido(){
 
   printf("Insere a TAG da pizza: ");
   scanf(" %10[^\n]", p->tag);
-  p->idPedido = rand() % 1000000;
+  
+  do{
+      p->idPedido = rand() % 1000000;
+    } while(verificaIdPedido(p->idPedido) == 1);
+  
   strcpy(p->saborPizza, encontraPizza(p->tag));
   strcpy(p->tamanhoPizza, obterTamanhoPizza(p->tag));
   p->precoPizza = obterPreco(p->tamanhoPizza);
@@ -29,6 +34,7 @@ void criarPedido(){
     printf("Pizza nao encontrada");
   }
   fwrite(p, sizeof(Pedido), 1, file);
+  printf("%s", p->cpf);
   free(p);
   fclose(file);
 }
@@ -50,6 +56,25 @@ void listarPedidos(){
   }
   free(p);
   fclose(file);
+}
+
+int verificaIdPedido(int a){
+  FILE *file = fopen("pedidos.dat", "rb");
+  Pedido *p = (Pedido*) malloc(sizeof(Pedido));  
+  
+  int flag; 
+  if (file == NULL){
+    printf("Erro ao abrir o arquivo de clientes!");
+    exit(1);
+  }
+  while( fread(p, sizeof(Pedido), 1, file) ){
+    if(a == p->idPedido){
+      flag = 1;
+    }
+  }
+  fclose(file);
+  free(p);
+  return flag; 
 }
 
 void menuPedido(){
