@@ -39,6 +39,35 @@ void criarPedido(){
   fclose(file);
 }
 
+void editarPedido(){
+  clear();
+  Pedido pedidoEditado;
+  FILE* file = fopen("pedidos.dat", "rb+");
+  int id; 
+
+  if(file == NULL){
+    printf("Erro ao abrir o arquivo!"); 
+    exit(1);
+  }
+
+  printf("Digita o ID do pedido a ser editado: ");
+  scanf(" %i", &id);
+  
+  while(fread(&pedidoEditado, sizeof(Pedido), 1, file) == 1){
+    if(pedidoEditado.idPedido == id){
+      printf("Pedido encontrado! \n");
+      printf("ID DO PEDIDO: %i \n RESPONSAVEL: %s \n", pedidoEditado.idPedido, pedidoEditado.clienteNome);
+      printf("Digite o novo status do pedido (0 - NÃO PAGO || 1 - PAGO)\n");
+      scanf("%d", &pedidoEditado.status);
+      printf("Pedido editado com sucesso, agora o status é: %i", pedidoEditado.status);
+      fseek(file, -sizeof(Pedido), SEEK_CUR);
+      fwrite(&pedidoEditado, sizeof(Pedido), 1, file);
+    }
+  }
+  
+  fclose(file);
+}
+
 void listarPedidos(){
   FILE *file = fopen("pedidos.dat", "rb");
   Pedido *p = (Pedido*) malloc(sizeof(Pedido));  
@@ -83,8 +112,9 @@ void menuPedido(){
   printf("2. Ver pedidos\n");
   printf("3. Buscar pedidos\n");
   printf("4. Buscar pedido específico\n");
-  printf("5. Deletar pedido");
-  printf("Digita qual opcao voce quer: ");
+  printf("5. Editar pedido\n");
+  printf("6. Deletar pedido\n");
+  printf("Digita qual opcao voce quer: \n");
   scanf("%d", &opt);
 
   switch(opt){
@@ -96,9 +126,10 @@ void menuPedido(){
       break; 
     case 3: 
       break;
-    case 4: 
+    case 4:
       break;
     case 5: 
+      editarPedido();
       break;
 
   }

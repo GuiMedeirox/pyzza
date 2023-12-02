@@ -16,5 +16,6 @@ struct Pedido{
 void menuPedido();
 void criarPedido();
 void listarPedidos();
+void editarPedido();
 int verificaIdPedido(int a); 
 // void verPedidos();
