@@ -9,5 +9,4 @@
 #include "pedidosLib.h"
 #include "pizzasLib.h"
 #include "checkers.h"
-typedef struct Pizza Pizza;
 #endif
