@@ -1,7 +1,8 @@
 typedef struct Pizza Pizza;
 
 struct Pizza{
-  char tag[10];
+  // char tag[10];
+  int idPizza; 
   char sabor[100]; 
   char ingredientes[150]; 
   int status; 
@@ -10,7 +11,7 @@ struct Pizza{
 };
 
 float obterPreco(const char* tamanho);
-char* obterTamanhoPizza(const char* tag);
+char* obterTamanhoPizza(int id);
 void menuPizzas(); 
 void criarPizza();
 void editarPizza();
@@ -18,5 +19,5 @@ void deletarPizza();
 void lerCardapio();
 int buscarPizza();
 void buscarPizzaIngrediente(); 
-char* encontraPizza (const char* tag);
-int verificaTAGDuplicada(const char* tag);
+char* encontraPizza (int id);
+int verificaIDDuplicado(int id);
