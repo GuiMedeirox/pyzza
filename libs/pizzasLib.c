@@ -317,6 +317,69 @@ float obterPreco(const char* tamanho) {
 
 }
 
+void exibirPizzaOrdemAlfabetica(){
+    system("clear||cls");
+    FILE* file;
+    Pizza* novaPizza;  
+    Pizza* listaPizza;  
+
+    file = fopen("cardapio.dat", "rb");  
+    if (file == NULL) {
+        printf("Erro ao abrir o arquivo\n");
+        exit(1); 
+    }
+
+    printf("\n-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#\n");  
+    printf("Pizzas em ordem alfabetica: \n");
+
+    listaPizza = NULL;  
+    novaPizza = (Pizza*)malloc(sizeof(Pizza)); 
+    if (novaPizza == NULL) {   
+        printf("Erro de alocacao de memoria\n");
+        exit(1); 
+    }
+
+    while (fread(novaPizza, sizeof(Pizza), 1, file) == 1) {  
+        novaPizza->proxima = NULL;  
+
+        if ((listaPizza == NULL) || (strcmp(novaPizza->sabor, listaPizza->sabor) < 0)) {  
+            novaPizza->proxima = listaPizza; 
+            listaPizza = novaPizza;  
+        } else {  
+            Pizza* pizzaAnterior = listaPizza;  
+            Pizza* pizzaAtual = listaPizza->proxima;   
+            while ((pizzaAtual != NULL) && strcmp(pizzaAtual->sabor, novaPizza->sabor) < 0) {  
+                pizzaAnterior = pizzaAtual; 
+                pizzaAtual = pizzaAtual->proxima;
+            }
+            pizzaAnterior->proxima = novaPizza;  
+            novaPizza->proxima = pizzaAtual;  
+        }
+
+        novaPizza = (Pizza*)malloc(sizeof(Pizza));
+        if (novaPizza == NULL) {
+            printf("Erro de alocacao de memoria\n");
+            exit(1);
+        }
+    }
+
+    fclose(file);  
+
+    novaPizza = listaPizza;  
+    while (novaPizza != NULL) {  
+        printf("%s\n", novaPizza->sabor);
+        novaPizza = novaPizza->proxima;   
+    }
+
+    novaPizza = listaPizza;  
+    while (listaPizza != NULL) {
+        listaPizza = listaPizza->proxima;  
+        free(novaPizza); 
+        novaPizza = listaPizza; 
+    }
+    printf("\n");
+}
+
 void menuPizzas(){
   int opcao; 
 
@@ -339,7 +402,8 @@ void menuPizzas(){
       break; 
     
     case 3: 
-      lerCardapio();
+      // lerCardapio();
+      exibirPizzaOrdemAlfabetica();
       break; 
    
     case 4: 
