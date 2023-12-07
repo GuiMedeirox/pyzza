@@ -31,14 +31,12 @@ void criarCliente(){
   printf("\nCliente criado com sucesso!");
   printf("\nO nome do cliente é: %s", c->nome);
   c->status=1;
-  //fprintf (file, "%s | %s \n", p->sabor, p->ingredientes);
+  
   fwrite(c, sizeof(Cliente), 1, file);
   free(c);
   fclose(file); 
-  // fgets(p->recheio, sizeof(p->recheio), stdin); 
+  
   }
-
-
 
 void exibirClientes(){
   FILE *file = fopen("clientes.dat", "rb");
@@ -260,15 +258,78 @@ void deletarCliente(){
   }
 }
 
+void exibirClientesAlfabetica(void) {
+    system("clear||cls");
+    FILE* file;
+    Cliente* novoCliente;  
+    Cliente* listaCliente;  
+
+    file = fopen("clientes.dat", "rb");  
+    if (file == NULL) {
+        printf("Erro ao abrir o arquivo\n");
+        exit(1); 
+    }
+
+    printf("\n-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#\n");  
+    printf("Clientes em ordem alfabetica: \n");
+
+    listaCliente = NULL;  
+    novoCliente = (Cliente*)malloc(sizeof(Cliente)); 
+    if (novoCliente == NULL) {   
+        printf("Erro de alocacao de memoria\n");
+        exit(1); 
+    }
+
+    while (fread(novoCliente, sizeof(Cliente), 1, file) == 1) {  
+        novoCliente->proximo = NULL;  
+
+        if ((listaCliente == NULL) || (strcmp(novoCliente->nome, listaCliente->nome) < 0)) {  
+            novoCliente->proximo = listaCliente; 
+            listaCliente = novoCliente;  
+        } else {  
+            Cliente* clienteAnterior = listaCliente;  
+            Cliente* clienteAtual = listaCliente->proximo;   
+            while ((clienteAtual != NULL) && strcmp(clienteAtual->nome, novoCliente->nome) < 0) {  
+                clienteAnterior = clienteAtual; 
+                clienteAtual = clienteAtual->proximo;
+            }
+            clienteAnterior->proximo = novoCliente;  
+            novoCliente->proximo = clienteAtual;  
+        }
+
+        novoCliente = (Cliente*)malloc(sizeof(Cliente));
+        if (novoCliente == NULL) {
+            printf("Erro de alocacao de memoria\n");
+            exit(1);
+        }
+    }
+
+    fclose(file);  
+
+    novoCliente = listaCliente;  
+    while (novoCliente != NULL) {  
+        printf("%s\n", novoCliente->nome);
+        novoCliente = novoCliente->proximo;   
+    }
+
+    novoCliente = listaCliente;  
+    while (listaCliente != NULL) {
+        listaCliente = listaCliente->proximo;  
+        free(novoCliente); 
+        novoCliente = listaCliente; 
+    }
+    printf("\n");
+}
 
 void menuClientes(){
   int opcao; 
   printf("1. Cadastrar um novo cliente\n");
   printf("2. Buscar um cliente específico\n");
   printf("3. Buscar cliente(s) com um nome específico \n");
-  printf("4. Ver os clientes\n");
-  printf("5. Editar um cliente\n");
-  printf("6. Deletar um cliente\n");
+  printf("4. Ver os clientes em ordem alfabetica\n");
+  printf("5. Ver os clientes\n");
+  printf("6. Editar um cliente\n");
+  printf("7. Deletar um cliente\n");
   printf("Opção: "); 
   scanf("%d", &opcao);
 
@@ -285,18 +346,21 @@ void menuClientes(){
       buscarClienteFiltrado();
       break;
       
-    case 4:   
-      exibirClientes();
+    case 4:
+      exibirClientesAlfabetica();
       break; 
     
     case 5 :
-      editarCliente();
+      exibirClientes();
       break; 
     
     case 6: 
-      deletarCliente();
+      editarCliente();
       break; 
+    case 7:
     
+      deletarCliente();
+      break;
     default: 
       printf("Opção inválida."); 
   }
