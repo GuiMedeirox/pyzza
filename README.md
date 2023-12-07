@@ -9,8 +9,10 @@ Projeto feito e utilizado na disciplina de programação, o intuito é simples: 
 ---
 ## Como usar?
 
-> git clone https://www.github.com/GuiMedeirox/pyzza.git
-> gcc -c libs/*.c && gcc main.c *.o
-> ./a.out
+>git clone https://www.github.com/GuiMedeirox/pyzza.git
+
+>gcc -c libs/*.c && gcc main.c *.o
+
+>./a.out
 
 PS: lembre-se que ao iniciar o projeto pela primeira vez, ha de se criar os arquivos atraves das funcoes Criar(...)     
