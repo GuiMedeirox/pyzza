@@ -18,4 +18,4 @@ void criarPedido();
 void listarPedidos();
 void editarPedido();
 int verificaIdPedido(int a); 
-// void verPedidos();
+int obterTotal(int id);

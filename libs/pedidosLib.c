@@ -21,29 +21,34 @@ void criarPedido(){
     exit(1);
   } 
   int id; 
-  printf("Insere o ID da pizza: ");
+  printf("Insere o ID da pizza: \n");
   scanf(" %d", &id);
 
   do{
       p->idPedido = rand() % 1000000;
     } while(verificaIdPedido(p->idPedido) == 1);
-  printf("%d", p->idPedido);
   strcpy(p->saborPizza, encontraPizza(id));
   strcpy(p->tamanhoPizza, obterTamanhoPizza(id));
   p->precoPizza = obterPreco(p->tamanhoPizza);
   if(p->saborPizza==NULL || p->tamanhoPizza==NULL){
     printf("Pizza nao encontrada");
   }
+  printf("Pizza adicionada no carrinho com sucesso!"); 
+  printf("\nSabor: %s\n", p->saborPizza);
+  printf("\nTamanho: %s\n", p->tamanhoPizza);
+  printf("\nValor: %f\n", p->precoPizza);
   fwrite(p, sizeof(Pedido), 1, file);
 
   int opt;
   do{
     printf("Voce quer adicionar mais alguma pizza no carrinho?\n");
-   	scanf(" %d", &opt);
+    printf("0 - NAO || 1 - sim\n");
+    scanf(" %d", &opt);
    	if(opt==1){
-   		//free(p->nomeProduto);
-   		printf("Insere o ID da outra pizza: \n");
-      scanf(" %d", &id);
+      do{
+   		  printf("Insere o ID da outra pizza: \n");
+        scanf(" %d", &id);
+      }while(verificaIdPizza(id)==0);
   		strcpy(p->saborPizza, encontraPizza(id));
       strcpy(p->tamanhoPizza, obterTamanhoPizza(id));
       p->precoPizza = obterPreco(p->tamanhoPizza);
@@ -56,8 +61,9 @@ void criarPedido(){
    	}
 
    }while(opt==1);
-    free(p);
     fclose(file);
+    obterTotal(p->idPedido);
+    free(p);
   }
 
 void editarPedido(){
@@ -100,9 +106,9 @@ void listarPedidos(){
   while( fread(p, sizeof(Pedido), 1, file) ){
       printf("\n-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#\n");     
       printf("ID - TOTAL DO PEDIDO - STATUS - CPF \n");
-      printf("%-6d | %-6f | %-1d | | %-11s \n", p->idPedido, p->totalPedido, p->status, p->cpf);
+      printf("%-6d | %-6d | %-1d | | %-11s \n", p->idPedido, obterTotal(p->idPedido), p->status, p->cpf);
       printf("CLIENTE - SABOR - TAMANHO - PRECO\n");
-      printf("%-25s | %-25s | %-2s | %-5f", p->clienteNome, p->saborPizza, p->tamanhoPizza, p->precoPizza);  
+      printf("%-6s | %-6s | %-2s | %-5f", p->clienteNome, p->saborPizza, p->tamanhoPizza, p->precoPizza);  
   }
   free(p);
   fclose(file);
@@ -127,6 +133,52 @@ int verificaIdPedido(int a){
   return flag; 
 }
 
+int obterTotal(int id){
+  FILE *file = fopen("pedidos.dat", "rb+");
+  Pedido p; 
+  
+  int total=0; 
+  if (file == NULL){
+    printf("Erro ao abrir o arquivo de clientes!");
+    exit(1);
+  }
+  while( fread(&p, sizeof(Pedido), 1, file) ){
+    if(id == p.idPedido){
+      total += p.precoPizza;
+    }
+  }
+  fclose(file);
+  return total;
+  
+}
+
+void buscaPedido(){
+  clear();
+  int id; 
+  FILE* file = fopen("pedidos.dat", "rb");
+  Pedido* p = (Pedido*) malloc(sizeof(Pedido));
+  if(file == NULL){
+      printf("Erro ao abrir o arquivo!\n");
+      exit(1);
+  }
+  do{
+    printf("Digita o ID do pedido que você quer buscar: ");
+    scanf(" %d", &id);
+  }while(verificaIdPedido(id) != 1);
+
+  printf("-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#");
+  printf("\nPEDIDO %d\n", id);
+  while(!feof(file)){
+    fread(p, sizeof(Pedido), 1, file);
+    if( id == p->idPedido ) {
+      printf("-> %s\n", p->saborPizza);
+    }
+  }
+  printf("-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#");
+  fclose(file);
+  free(p);
+}
+
 void menuPedido(){
   int opt; 
   printf("1. Fazer pedido\n");
@@ -147,7 +199,8 @@ void menuPedido(){
       break; 
     case 3: 
       break;
-    case 4:
+    case 4: 
+      buscaPedido();
       break;
     case 5: 
       editarPedido();

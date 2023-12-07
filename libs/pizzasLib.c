@@ -139,6 +139,7 @@ void lerCardapio(){
       printf("Sabor: %s\n", p->sabor);
       printf("Ingredientes: %s\n", p->ingredientes);
       printf("ID: %d \n", p->idPizza);
+      printf("Tamanho %s \n", p->tamanho);
       printf("Preco: %f\n", p->total);
       printf(">-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<\n");
     }
