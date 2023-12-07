@@ -18,26 +18,47 @@ void criarPedido(){
   strcpy(p->clienteNome, encontraCliente(p->cpf));
   if(p->clienteNome == NULL){
     printf("Cliente nao encontrado");
+    exit(1);
   } 
+  int id; 
+  printf("Insere o ID da pizza: ");
+  scanf(" %d", &id);
 
-  printf("Insere a TAG da pizza: ");
-  scanf(" %10[^\n]", p->tag);
-  
   do{
       p->idPedido = rand() % 1000000;
     } while(verificaIdPedido(p->idPedido) == 1);
-  
-  strcpy(p->saborPizza, encontraPizza(p->tag));
-  strcpy(p->tamanhoPizza, obterTamanhoPizza(p->tag));
+  printf("%d", p->idPedido);
+  strcpy(p->saborPizza, encontraPizza(id));
+  strcpy(p->tamanhoPizza, obterTamanhoPizza(id));
   p->precoPizza = obterPreco(p->tamanhoPizza);
   if(p->saborPizza==NULL || p->tamanhoPizza==NULL){
     printf("Pizza nao encontrada");
   }
   fwrite(p, sizeof(Pedido), 1, file);
-  printf("%s", p->cpf);
-  free(p);
-  fclose(file);
-}
+
+  int opt;
+  do{
+    printf("Voce quer adicionar mais alguma pizza no carrinho?\n");
+   	scanf(" %d", &opt);
+   	if(opt==1){
+   		//free(p->nomeProduto);
+   		printf("Insere o ID da outra pizza: \n");
+      scanf(" %d", &id);
+  		strcpy(p->saborPizza, encontraPizza(id));
+      strcpy(p->tamanhoPizza, obterTamanhoPizza(id));
+      p->precoPizza = obterPreco(p->tamanhoPizza);
+    	fwrite(p, sizeof(Pedido), 1, file);
+      printf("ID do PEDIDO: %d", p->idPedido);
+      printf("Pizza adicionada no carrinho com sucesso!"); 
+      printf("\nSabor: %s\n", p->saborPizza);
+      printf("\nTamanho: %s\n", p->tamanhoPizza);
+      printf("\nValor: %f\n", p->precoPizza);
+   	}
+
+   }while(opt==1);
+    free(p);
+    fclose(file);
+  }
 
 void editarPedido(){
   clear();
@@ -77,9 +98,9 @@ void listarPedidos(){
     exit(1);
   }
   while( fread(p, sizeof(Pedido), 1, file) ){
-      printf("-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#\n");     
-      printf("ID    -      TOTAL DO PEDIDO - STATUS - TAG - CPF \n");
-      printf("%-6d | %-6f | %-1d | %-10s | %-11s \n", p->idPedido, p->totalPedido, p->status, p->tag, p->cpf);
+      printf("\n-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#\n");     
+      printf("ID - TOTAL DO PEDIDO - STATUS - CPF \n");
+      printf("%-6d | %-6f | %-1d | | %-11s \n", p->idPedido, p->totalPedido, p->status, p->cpf);
       printf("CLIENTE - SABOR - TAMANHO - PRECO\n");
       printf("%-25s | %-25s | %-2s | %-5f", p->clienteNome, p->saborPizza, p->tamanhoPizza, p->precoPizza);  
   }
