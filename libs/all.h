@@ -5,7 +5,6 @@
 #include <string.h> 
 #include <ctype.h> 
 #include "clientesLib.h"
-#include "funcionarioLib.h"
 #include "pedidosLib.h"
 #include "pizzasLib.h"
 #include "checkers.h"
