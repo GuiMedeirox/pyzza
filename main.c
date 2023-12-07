@@ -9,10 +9,9 @@ int main() {
         printf("\n----------\n");
         printf("Escolha uma opção:\n");
         printf("1. Pizzas\n");
-        printf("2. Funcionários\n");
-        printf("3. Clientes\n");
-        printf("4. Pedidos\n");
-        printf("5. Sobre o projeto\n");
+        printf("2. Clientes\n");
+        printf("3. Pedidos\n");
+        printf("4. Sobre o projeto\n");
         printf("0. Sair\n");
         printf("Opção: ");
 	    scanf("%d", &op);  
@@ -24,22 +23,19 @@ int main() {
                 break; 
             case 2:
                 clear();
-                menuFuncionario(); 
+                menuClientes();
                 break;
             case 3:
                 clear();
-                menuClientes();
-                break;
-            case 4:
-                clear();
                 menuPedido(); 
                 break;
-            case 5: 
+            case 4:
                 clear();
                 printf("Projeto feito e utilizado na disciplina de programação, o intuito é simples: suprir todas (ou quase) as funcionalidades que um sistema de uma pizzaria pode ter.\n"); 
                 printf("Um agradecimento especial a:\n Eduardo dc:(eduardoferro);\n Tesch dc:(ptesch) \n Gabriel Canuto ");
                 printf("dev: Guilherme\n");
                 printf("GitHub: @GuiMedeirox\n"); 
+                break;
             case 0:
                 printf("Saindo...\n");
                 break;
