@@ -386,9 +386,10 @@ void menuPizzas(){
   printf("1. Cadastrar um novo sabor de pizza\n");
   printf("2. Buscar um sabor de pizza específico\n");
   printf("3. Ver o cardápio\n");
-  printf("4. Buscar uma pizza por um ingrediente \n");
-  printf("5. Editar um sabor de pizza\n");
-  printf("6. Deletar um sabor de pizza\n");
+  printf("4. Exibir cardapio em ordem alfabetica:");
+  printf("5. Buscar uma pizza por um ingrediente \n");
+  printf("6. Editar um sabor de pizza\n");
+  printf("7. Deletar um sabor de pizza\n");
   printf("Opção: ");
   scanf("%i", &opcao);  
 
@@ -402,18 +403,20 @@ void menuPizzas(){
       break; 
     
     case 3: 
-      // lerCardapio();
-      exibirPizzaOrdemAlfabetica();
+      lerCardapio();
       break; 
    
     case 4: 
-      buscarPizzaIngrediente();
+      exibirPizzaOrdemAlfabetica();
       break;
 
     case 5: 
-      editarPizza();
+      buscarPizzaIngrediente();
       break; 
     case 6: 
+      editarPizza();
+      break;
+    case 7:
       deletarPizza();
       break; 
     default: 
