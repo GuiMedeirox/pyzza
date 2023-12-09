@@ -28,7 +28,7 @@ void criarPizza(){
 
   do{
       p->idPizza = rand() % 1000000;
-    } while(verificaIdPizza(p->idPizza) == 1);
+    } while(verificaIDDuplicado(p->idPizza) == 1);
 
     printf("Digita o tamanho da pizza: ");
     scanf(" %2[^\n]", p->tamanho);
@@ -111,25 +111,6 @@ char* encontraPizza (int id){
     
     fclose(file);
     return NULL;
-}
-
-int verificaIdPizza(int a){
-  FILE *file = fopen("cardapio.dat", "rb");
-  Pizza *p = (Pizza*) malloc(sizeof(Pizza));  
-  
-  int flag; 
-  if (file == NULL){
-    printf("Erro ao abrir o arquivo de clientes!");
-    exit(1);
-  }
-  while( fread(p, sizeof(Pizza), 1, file) ){
-    if(a == p->idPizza){
-      flag = 1;
-    }
-  }
-  fclose(file);
-  free(p);
-  return flag; 
 }
 
 void lerCardapio(){
@@ -257,7 +238,6 @@ void deletarPizza(){
   Pizza p;
   FILE* file = fopen("cardapio.dat", "rb+");
   int id; 
-  int opt;
 
   if(file == NULL){
     printf("Erro ao abrir o arquivo!"); 
@@ -392,10 +372,10 @@ void menuPizzas(){
   printf("1. Cadastrar um novo sabor de pizza\n");
   printf("2. Buscar um sabor de pizza específico\n");
   printf("3. Ver o cardápio\n");
-  printf("4. Exibir cardapio em ordem alfabetica:");
+  printf("4. Exibir cardapio em ordem alfabetica\n");
   printf("5. Buscar uma pizza por um ingrediente \n");
   printf("6. Editar um sabor de pizza\n");
-  printf("7. Deletar um sabor de pizza\n");
+  // printf("7. Deletar um sabor de pizza\n");
   printf("Opção: ");
   scanf("%i", &opcao);  
 
@@ -422,9 +402,9 @@ void menuPizzas(){
     case 6: 
       editarPizza();
       break;
-    case 7:
-      deletarPizza();
-      break; 
+    // case 7:
+    //   deletarPizza();
+    //   break; 
     default: 
     printf("Opção inválida."); 
 

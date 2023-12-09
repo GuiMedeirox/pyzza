@@ -48,7 +48,7 @@ void criarPedido(){
       do{
    		  printf("Insere o ID da outra pizza: \n");
         scanf(" %d", &id);
-      }while(verificaIdPizza(id)==0);
+      }while(verificaIDDuplicado(id)==0);
   		strcpy(p->saborPizza, encontraPizza(id));
       strcpy(p->tamanhoPizza, obterTamanhoPizza(id));
       p->precoPizza = obterPreco(p->tamanhoPizza);

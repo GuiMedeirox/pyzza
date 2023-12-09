@@ -16,7 +16,7 @@ char* obterTamanhoPizza(int id);
 void menuPizzas(); 
 void criarPizza();
 void editarPizza();
-void deletarPizza();
+// void deletarPizza();
 void lerCardapio();
 int buscarPizza();
 void buscarPizzaIngrediente(); 

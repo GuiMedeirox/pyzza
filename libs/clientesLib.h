@@ -17,5 +17,4 @@ void editarCliente();
 void deletarCliente();
 int verificaCPFDuplicado( char* cpf);
 char *encontraCliente(char* cpf);
-Cliente retornaCliente(const char* cpf);
 void exibirClientesAlfabetica();

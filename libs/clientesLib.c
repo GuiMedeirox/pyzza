@@ -111,25 +111,6 @@ char *encontraCliente( char *cpf) {
     return NULL;
 }
 
- Cliente retornaCliente(const char* cpf){
-  Cliente c;
-  FILE *file = fopen("clientes.dat", "rb");
-
-  if(file == NULL){
-    printf(" Erro na abertura do arquivo");
-    exit(1);
-  }
-
-  while( fread(&c, sizeof(Cliente),1, file) == 1){
-    if(strcmp(c.cpf,cpf)==0){
-      return c;
-    }
-  }
-
-  printf("Cliente nao encontrado");
-
- }
-
 int verificaCPFDuplicado(char* cpf) {
     FILE* file = fopen("clientes.dat", "rb");
 
