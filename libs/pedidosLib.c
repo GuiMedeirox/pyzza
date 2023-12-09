@@ -58,7 +58,10 @@ void criarPedido(){
       printf("\nSabor: %s\n", p->saborPizza);
       printf("\nTamanho: %s\n", p->tamanhoPizza);
       printf("\nValor: %f\n", p->precoPizza);
-   	}
+   	} else if(opt == 0){
+      clear();
+      printf("Carrinho fechado com sucesso!");
+    }
 
    }while(opt==1);
     fclose(file);
@@ -98,19 +101,45 @@ void editarPedido(){
 void listarPedidos(){
   FILE *file = fopen("pedidos.dat", "rb");
   Pedido *p = (Pedido*) malloc(sizeof(Pedido));  
-  
+  int idAnterior;
   if (file == NULL){
     printf("Erro ao abrir o arquivo de clientes!");
     exit(1);
   }
   while( fread(p, sizeof(Pedido), 1, file) ){
+      if(idAnterior != p->idPedido){
       printf("\n-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#\n");     
-      printf("ID - TOTAL DO PEDIDO - STATUS - CPF \n");
-      printf("%-6d | %-6d | %-1d | | %-11s \n", p->idPedido, obterTotal(p->idPedido), p->status, p->cpf);
-      printf("CLIENTE - SABOR - TAMANHO - PRECO\n");
-      printf("%-6s | %-6s | %-2s | %-5f", p->clienteNome, p->saborPizza, p->tamanhoPizza, p->precoPizza);  
-  }
+      printf("ID - CLIENTE - TOTAL DO PEDIDO - STATUS - CPF \n");
+      printf("%-6d | %-6s | %-6d | %-1d | %-11s \n", p->idPedido, p->clienteNome, obterTotal(p->idPedido), p->status, p->cpf);
+      printf("SABOR - TAMANHO - PRECO\n");
+      printf("%-6s | %-2s | %-5f\n", p->saborPizza, p->tamanhoPizza, p->precoPizza);  
+      } else if(idAnterior == p->idPedido){
+        printf("%-6s | %-2s | %-5f\n", p->saborPizza, p->tamanhoPizza, p->precoPizza);
+      } 
+      idAnterior = p->idPedido;
+    }
   free(p);
+  fclose(file);
+}
+
+void pagarPedido(int id){
+  clear();
+  Pedido pedidoEditado;
+  FILE* file = fopen("pedidos.dat", "rb+");
+
+  if(file == NULL){
+    printf("Erro ao abrir o arquivo!"); 
+    exit(1);
+  }
+  
+  while(fread(&pedidoEditado, sizeof(Pedido), 1, file) == 1){
+    if(pedidoEditado.idPedido == id){
+      pedidoEditado.status=1;
+      fseek(file, -sizeof(Pedido), SEEK_CUR);
+      fwrite(&pedidoEditado, sizeof(Pedido), 1, file);
+    }
+  }
+  printf("Pedido %i pago com sucesso!", id);
   fclose(file);
 }
 
@@ -185,7 +214,7 @@ void menuPedido(){
   printf("2. Ver pedidos\n");
   printf("3. Buscar pedidos\n");
   printf("4. Buscar pedido específico\n");
-  printf("5. Editar pedido\n");
+  printf("5. Pagar pedido\n");
   printf("6. Deletar pedido\n");
   printf("Digita qual opcao voce quer: \n");
   scanf("%d", &opt);
@@ -202,8 +231,11 @@ void menuPedido(){
     case 4: 
       buscaPedido();
       break;
-    case 5: 
-      editarPedido();
+    case 5:
+      int id; 
+      printf("Digita o ID do pedido a ser pago: ");
+      scanf(" %i", &id);
+      pagarPedido(id);
       break;
 
   }
