@@ -9,7 +9,6 @@ void criarPizza(){
   FILE* file = fopen("cardapio.dat", "ab");
   Pizza* p = (Pizza*) malloc(sizeof(Pizza));
   printf("--- Cadastro de Pizzas ---\n");
-  
 
     printf("Digita o sabor da Pizza: ");
     scanf(" %100[^\n]", p->sabor);
@@ -34,12 +33,19 @@ void criarPizza(){
     printf("Digita o tamanho da pizza: ");
     scanf(" %2[^\n]", p->tamanho);
 
-    while( p->tamanho == NULL ){
-      printf("Tamanho invalido, insira novamente: ");
-      scanf(" %2[^\n]", p->tamanho);
+    if ( strcmp(p->tamanho, "P") == 0 || strcmp(p->tamanho, "p") == 0 ){
+    } else if (strcmp(p->tamanho, "M") == 0 || strcmp(p->tamanho, "m") == 0  ){
+    } else if ( strcmp(p->tamanho, "G") == 0 || strcmp(p->tamanho, "g") == 0  ){
+    } else if ( strcmp(p->tamanho, "GG") == 0 || strcmp(p->tamanho, "gg") == 0  ){
+    } else{
+      strcpy(p->tamanho,"00");
     }
+    while(strcmp(p->tamanho, "00")==0){
+      printf("Insere o tamanho da pizza novamente: ");
+      getchar();
+      scanf(" %2[^\n]", p->tamanho);
 
-
+    }
 
   printf("\nPizza criada com sucesso!");
   printf("\nO sabor escolhido foi: %s", p->sabor);
@@ -303,13 +309,13 @@ char* obterTamanhoPizza(int id){
 
 float obterPreco(const char* tamanho) {
 
-  if ( strcmp(tamanho, "P") == 0 ){
+  if ( strcmp(tamanho, "P") == 0 || strcmp(tamanho, "p") == 0 ){
     return 20.0;
-  } else if ( strcmp(tamanho, "M") == 0 ){
+  } else if (strcmp(tamanho, "M") == 0 || strcmp(tamanho, "m") == 0  ){
     return 25.0;
-  } else if ( strcmp(tamanho, "G") == 0 ){
+  } else if ( strcmp(tamanho, "G") == 0 || strcmp(tamanho, "g") == 0  ){
     return 30.0;
-  } else if ( strcmp(tamanho, "GG") == 0 ){
+  } else if ( strcmp(tamanho, "GG") == 0 || strcmp(tamanho, "gg") == 0  ){
     return 35.0;
   } else{
     return 0.0;
