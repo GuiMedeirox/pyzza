@@ -81,7 +81,7 @@ int buscarCliente(){
   return 0; 
 }
 
-char *encontraCliente( char *cpf) {
+char *encontraCliente( const char *cpf) {
     Cliente cliente;
     FILE *file = fopen("clientes.dat", "rb"); // Abre o arquivo para leitura
 
@@ -111,7 +111,7 @@ char *encontraCliente( char *cpf) {
     return NULL;
 }
 
-int verificaCPFDuplicado(char* cpf) {
+int verificaCPFDuplicado(const char* cpf) {
     FILE* file = fopen("clientes.dat", "rb");
 
     if (file == NULL) {
@@ -339,7 +339,6 @@ void menuClientes(){
       editarCliente();
       break; 
     case 7:
-    
       deletarCliente();
       break;
     default: 
