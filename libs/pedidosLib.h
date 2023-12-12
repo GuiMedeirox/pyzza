@@ -20,3 +20,4 @@ void editarPedido();
 int verificaIdPedido(int a); 
 int obterTotal(int id);
 void pagarPedido(int id);
+void buscarPedidoPorCliente(const char* cpf);

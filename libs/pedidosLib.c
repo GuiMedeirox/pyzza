@@ -208,6 +208,29 @@ void buscaPedido(){
   free(p);
 }
 
+void buscarPedidoPorCliente(const char* cpf){
+    Pedido pedido;
+    FILE *file = fopen("pedidos.dat", "rb"); // Abre o arquivo para leitura
+
+    if (file == NULL) {
+        printf("Erro ao abrir o arquivo para leitura.\n");
+        exit(1);
+    }
+    clear();
+    int idAnterior;
+    printf("Pedidos atrelados ao CPF %s\n ", cpf);
+    printf("Titular dos pedidos: %s\n", encontraCliente(cpf));
+    while (fread(&pedido, sizeof(Pedido), 1, file) == 1) {
+        if (strcmp(pedido.cpf, cpf) == 0) {
+            if(idAnterior != pedido.idPedido){
+              printf("ID: %d\n", pedido.idPedido);
+            }
+        }
+        idAnterior = pedido.idPedido;
+    }
+    fclose(file);
+}
+
 void menuPedido(){
   int opt; 
   printf("1. Fazer pedido\n");
@@ -215,7 +238,7 @@ void menuPedido(){
   printf("3. Buscar pedidos\n");
   printf("4. Buscar pedido específico\n");
   printf("5. Pagar pedido\n");
-  printf("6. Deletar pedido\n");
+  printf("6. Listar pedidos de um cliente\n");
   printf("Digita qual opcao voce quer: \n");
   scanf("%d", &opt);
 
@@ -237,6 +260,10 @@ void menuPedido(){
       scanf(" %i", &id);
       pagarPedido(id);
       break;
-
+    case 6:
+      char cpf[12];
+      printf("Digita o CPF do cliente para buscar os pedidos: ");
+      scanf(" %12[0-9]", cpf);
+      buscarPedidoPorCliente(cpf);
   }
 };
