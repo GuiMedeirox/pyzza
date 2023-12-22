@@ -244,7 +244,7 @@ void deletarPizza(){
     exit(1);
   }
 
-  printf("Digita a ID da pizza a ser editado: ");
+  printf("Digita a ID da pizza a ser deletado: ");
   scanf(" %d", &id);
   
   while(fread(&p, sizeof(Pizza), 1, file) == 1){

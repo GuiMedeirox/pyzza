@@ -233,6 +233,8 @@ void buscarPedidoPorCliente(const char* cpf){
 
 void menuPedido(){
   int opt; 
+  char cpf[12];
+  int id; 
   printf("1. Fazer pedido\n");
   printf("2. Ver pedidos\n");
   printf("3. Buscar pedidos\n");
@@ -255,13 +257,11 @@ void menuPedido(){
       buscaPedido();
       break;
     case 5:
-      int id; 
       printf("Digita o ID do pedido a ser pago: ");
       scanf(" %i", &id);
       pagarPedido(id);
       break;
     case 6:
-      char cpf[12];
       printf("Digita o CPF do cliente para buscar os pedidos: ");
       scanf(" %12[0-9]", cpf);
       buscarPedidoPorCliente(cpf);
