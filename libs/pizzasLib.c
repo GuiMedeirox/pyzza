@@ -375,7 +375,7 @@ void menuPizzas(){
   printf("4. Exibir cardapio em ordem alfabetica\n");
   printf("5. Buscar uma pizza por um ingrediente \n");
   printf("6. Editar um sabor de pizza\n");
-  // printf("7. Deletar um sabor de pizza\n");
+  printf("7. Deletar um sabor de pizza\n");
   printf("Opção: ");
   scanf("%i", &opcao);  
 
@@ -402,9 +402,9 @@ void menuPizzas(){
     case 6: 
       editarPizza();
       break;
-    // case 7:
-    //   deletarPizza();
-    //   break; 
+    case 7:
+      deletarPizza();
+      break; 
     default: 
     printf("Opção inválida."); 
 

@@ -32,7 +32,7 @@ int main() {
             case 4:
                 clear();
                 printf("Projeto feito e utilizado na disciplina de programação, o intuito é simples: suprir todas (ou quase) as funcionalidades que um sistema de uma pizzaria pode ter.\n"); 
-                printf("Um agradecimento especial a:\nEduardo dc:(eduardoferro);\nTesch dc:(ptesch) \nGabriel Canuto\nFlavius ");
+                printf("Um agradecimento especial a:\nEduardo dc:(eduardoferro);\nTesch dc:(ptesch) \nGabriel Canuto\nFlavius\nRenan\n ");
                 printf("dev: Guilherme\n");
                 printf("GitHub: @GuiMedeirox\n"); 
                 break;
